@@ -65,3 +65,41 @@ These figures describe the current test run and should be updated if the dataset
 
 ## Responsible Use
 This project analyzes a sample dataset for educational purposes. A classification alone does not establish that a source IP is malicious.
+
+## Analysis Results
+
+The MapReduce job successfully processed 2,000 OpenSSH log records and generated aggregated results for 25 source IP groups.
+
+| Metric | Result |
+|---|---:|
+| Input log records | 2,000 |
+| Mapper output records | 719 |
+| Unique IP groups in output | 25 |
+| SUSPICIOUS classifications | 9 |
+| REVIEW classifications | 3 |
+| MONITOR classifications | 13 |
+
+### Processing Architecture
+
+```mermaid
+flowchart TD
+    A[OpenSSH Authentication Logs] --> B[HDFS Input Directory]
+    B --> C[Java MapReduce Mapper]
+    C --> D[Aggregate Events by Source IP]
+    D --> E[MapReduce Reducer]
+    E --> F[Apply Classification Rules]
+    F --> G[HDFS Analysis Output]
+    G --> H[Local Results File]
+```
+
+### Interpretation
+
+- **SUSPICIOUS:** Repeated failed-password attempts met the configured threshold.
+- **REVIEW:** Break-in warnings or repeated invalid-user events met the configured review rules.
+- **MONITOR:** The activity did not meet either threshold.
+
+These classifications are rule-based indicators for further investigation. They do not establish that an IP address is malicious.
+
+### Dataset Attribution
+
+The project uses OpenSSH authentication logs from the [LogHub dataset collection](https://github.com/logpai/loghub). Refer to the original repository for dataset details and usage terms.
