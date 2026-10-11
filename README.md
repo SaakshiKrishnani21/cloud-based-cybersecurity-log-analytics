@@ -118,3 +118,36 @@ pie showData
 
 These classifications identify activity for further investigation; they do not confirm malicious behavior.
 
+## Automated Testing
+
+The project includes lightweight Java tests for the security event classification rules.
+
+### Test Scenarios
+
+| Test scenario | Expected result |
+|---|---|
+| 4 failed passwords | MONITOR |
+| 5 failed passwords | SUSPICIOUS |
+| 3 invalid-user events | REVIEW |
+| 1 break-in warning | REVIEW |
+| No suspicious events | MONITOR |
+| 5 failures with other warning indicators | SUSPICIOUS |
+
+### Run the Tests
+
+From the project root directory, compile the test class against the compiled project classes:
+
+```bash
+javac -cp build -d tests tests/ClassificationTest.java
+```
+
+Execute the tests:
+
+```bash
+java -cp build:tests ClassificationTest
+```
+
+All six classification tests should pass.
+
+These tests validate the rule-based classification logic. They do not establish that an IP address is definitively malicious.
+
