@@ -174,7 +174,7 @@ Run the parser tests:
 java -cp build:tests ParserTest
 ```
 
-The current test suites contain six classification tests and six parser tests. Both should pass.
+The current test suites contain six classification tests and 21 parser checks. Both should pass.
 
 ### Build the Hadoop JAR
 
