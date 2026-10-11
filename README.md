@@ -57,8 +57,7 @@ hdfs dfs -get /cybersecurity/output-analysis/part-r-00000 \
 These figures describe the current test run and should be updated if the dataset or implementation changes.
 
 ## Limitations and Future Improvements
-- Add unit tests for log parsing and classification.
-- Improve IP extraction and event parsing for varied log formats.
+- Expand IPv4 validation and test additional OpenSSH log formats.
 - Add timestamps and time-window-based detection.
 - Visualize findings in a dashboard.
 - Evaluate detection rules against labeled test data.
@@ -120,9 +119,20 @@ These classifications identify activity for further investigation; they do not c
 
 ## Automated Testing
 
-The project includes lightweight Java tests for the security event classification rules.
+The project includes lightweight Java tests for both security event classification and log parsing.
 
-### Test Scenarios
+### Parser Test Scenarios
+
+| Test scenario | Expected behavior |
+|---|---|
+| Failed password with source IP | Extract IP and event count |
+| Invalid user with source IP | Extract IP and event count |
+| Successful public-key login | Extract IP and event count |
+| Break-in warning without an IP | Ignore the line |
+| Unrelated log line | Ignore the line |
+| Security event without an IP | Ignore the line |
+
+### Classification Test Scenarios
 
 | Test scenario | Expected result |
 |---|---|
@@ -135,19 +145,44 @@ The project includes lightweight Java tests for the security event classificatio
 
 ### Run the Tests
 
-From the project root directory, compile the test class against the compiled project classes:
+From the project root directory, compile the project:
 
 ```bash
-javac -cp build -d tests tests/ClassificationTest.java
+mkdir -p build tests
+javac -classpath "$(hadoop classpath)" -d build \
+  src/SecurityClassifier.java \
+  src/SecurityLogParser.java \
+  src/SecurityLogAnalyzer.java
 ```
 
-Execute the tests:
+Compile both test classes:
+
+```bash
+javac -cp build -d tests \
+  tests/ClassificationTest.java tests/ParserTest.java
+```
+
+Run the classification tests:
 
 ```bash
 java -cp build:tests ClassificationTest
 ```
 
-All six classification tests should pass.
+Run the parser tests:
+
+```bash
+java -cp build:tests ParserTest
+```
+
+The current test suites contain six classification tests and six parser tests. Both should pass.
+
+### Build the Hadoop JAR
+
+```bash
+jar -cf security-log-analyzer.jar -C build .
+```
+
+The JAR includes the analyzer, parser, and classifier classes.
 
 These tests validate the rule-based classification logic. They do not establish that an IP address is definitively malicious.
 
