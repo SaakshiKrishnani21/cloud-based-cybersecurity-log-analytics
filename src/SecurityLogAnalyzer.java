@@ -99,15 +99,7 @@ public class SecurityLogAnalyzer extends Configured implements Tool {
                 warning += Integer.parseInt(parts[3]);
             }
 
-            String status;
-
-            if (failed >= 5) {
-                status = "SUSPICIOUS";
-            } else if (warning > 0 || invalid >= 3) {
-                status = "REVIEW";
-            } else {
-                status = "MONITOR";
-            }
+            String status = SecurityClassifier.classify(failed, invalid, warning);
 
             String report =
                     "failed_passwords=" + failed
