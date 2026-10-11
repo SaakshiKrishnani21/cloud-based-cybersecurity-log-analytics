@@ -103,3 +103,18 @@ These classifications are rule-based indicators for further investigation. They 
 ### Dataset Attribution
 
 The project uses OpenSSH authentication logs from the [LogHub dataset collection](https://github.com/logpai/loghub). Refer to the original repository for dataset details and usage terms.
+
+## Classification Distribution
+
+The chart below summarizes the rule-based classifications from the sample run.
+
+```mermaid
+pie showData
+    title Source IP Classification Results
+    "SUSPICIOUS" : 9
+    "REVIEW" : 3
+    "MONITOR" : 13
+```
+
+These classifications identify activity for further investigation; they do not confirm malicious behavior.
+
