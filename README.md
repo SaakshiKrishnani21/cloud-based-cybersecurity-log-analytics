@@ -186,3 +186,23 @@ The JAR includes the analyzer, parser, and classifier classes.
 
 These tests validate the rule-based classification logic. They do not establish that an IP address is definitively malicious.
 
+
+## Final Hadoop Analysis Results
+
+The updated parser and classifier were tested against the OpenSSH log dataset
+using Hadoop MapReduce on AWS EC2.
+
+| Metric | Result |
+|---|---:|
+| Input log records | 2,000 |
+| Mapper output records | 719 |
+| Reducer output records | 25 |
+| Suspicious IP groups | 10 |
+| Review IP groups | 3 |
+| Monitor IP groups | 12 |
+
+The 25 output rows represent source-IP groups. Classification is rule-based
+and should be treated as an indicator for further investigation, not proof
+of malicious activity.
+
+The final output is available in `analysis-results-final.txt`.
