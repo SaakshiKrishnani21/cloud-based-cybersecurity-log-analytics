@@ -1,0 +1,17 @@
+# Compiled Java files
+build/
+*.class
+
+# Generated artifacts
+*.jar
+
+# Local logs
+*.log
+
+# Credentials and private keys
+.env
+*.pem
+.aws/
+
+# Operating system files
+.DS_Store
