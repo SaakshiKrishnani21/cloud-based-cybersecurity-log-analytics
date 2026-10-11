@@ -35,44 +35,14 @@ public class SecurityLogAnalyzer extends Configured implements Tool {
         public void map(LongWritable key, Text value, Context context)
                 throws IOException, InterruptedException {
 
-            String line = value.toString();
+            String[] parsed = SecurityLogParser.parse(value.toString());
 
-            int failed = line.contains("Failed password") ? 1 : 0;
-
-            int invalid = line.contains("Invalid user") ? 1 : 0;
-
-            int success =
-                    (line.contains("Accepted password")
-                    || line.contains("Accepted publickey")) ? 1 : 0;
-
-            int warning =
-                    line.contains("POSSIBLE BREAK-IN ATTEMPT") ? 1 : 0;
-
-            if (failed + invalid + success + warning == 0) {
+            if (parsed == null) {
                 return;
             }
 
-            String ip = null;
-
-            Matcher sourceMatcher = SOURCE_PATTERN.matcher(line);
-
-            if (sourceMatcher.find()) {
-                ip = sourceMatcher.group(1);
-            } else {
-                Matcher ipMatcher = IP_PATTERN.matcher(line);
-
-                if (ipMatcher.find()) {
-                    ip = ipMatcher.group();
-                }
-            }
-
-            if (ip == null) {
-                return;
-            }
-
-            ipKey.set(ip);
-            counts.set(failed + "," + invalid + ","
-                    + success + "," + warning);
+            ipKey.set(parsed[0]);
+            counts.set(parsed[1]);
 
             context.write(ipKey, counts);
         }
