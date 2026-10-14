@@ -222,12 +222,12 @@ An interactive Power BI dashboard was developed to visualize cybersecurity log a
 
 ### Dashboard Preview
 
-![Cybersecurity Log Analytics Dashboard](dashboard/security-dashboard.png)
+![Cybersecurity Log Analytics Dashboard](security-dashboard.png)
 
 ### Dashboard Files
 
-- **Power BI Report:** [`Cybersecurity-Log-Analytics.pbix`](dashboard/Cybersecurity-Log-Analytics.pbix)
-- **Dashboard Screenshot:** [`security-dashboard.png`](dashboard/security-dashboard.png)
+- **Power BI Report:** [`Cybersecurity-Log-Analytics.pbix`](Cybersecurity-Log-Analytics.pbix)
+- **Dashboard Screenshot:** [`security-dashboard.png`](security-dashboard.png)
 
 ### Key Findings
 
