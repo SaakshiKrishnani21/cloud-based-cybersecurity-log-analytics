@@ -206,3 +206,45 @@ and should be treated as an indicator for further investigation, not proof
 of malicious activity.
 
 The final output is available in `analysis-results-final.txt`.
+
+## 📊 Power BI Dashboard
+
+An interactive Power BI dashboard was developed to visualize cybersecurity log analysis results generated using Hadoop MapReduce on AWS EC2.
+
+### Dashboard Features
+
+- **Security Classification Distribution:** Visualizes IP groups classified as `SUSPICIOUS`, `REVIEW`, and `MONITOR`.
+- **Failed Password Analysis:** Identifies IP groups with the highest number of failed password attempts.
+- **Suspicious Activity Investigation:** Compares failed passwords and invalid user attempts.
+- **Successful Login Analysis:** Displays successful login activity by source IP.
+- **Security Investigation Table:** Provides an IP-level view of failed passwords, invalid users, successful logins, break-in warnings, and security status.
+- **Hadoop Processing Metrics:** Visualizes MapReduce input and output record counts.
+
+### Dashboard Preview
+
+![Cybersecurity Log Analytics Dashboard](dashboard/security-dashboard.png)
+
+### Dashboard Files
+
+- **Power BI Report:** [`Cybersecurity-Log-Analytics.pbix`](dashboard/Cybersecurity-Log-Analytics.pbix)
+- **Dashboard Screenshot:** [`security-dashboard.png`](dashboard/security-dashboard.png)
+
+### Key Findings
+
+- **2,000** input records processed by the MapReduce job.
+- **719** map output records.
+- **719** reduce input records.
+- **25** final output records.
+- **10** IP groups classified as `SUSPICIOUS`.
+- **3** IP groups classified as `REVIEW`.
+- **12** IP groups classified as `MONITOR`.
+
+**Note:** Security classifications are based on predefined rules and indicate potentially suspicious activity. They do not independently confirm malicious behavior.
+
+### Tools Used
+
+- Microsoft Power BI Desktop
+- Hadoop MapReduce
+- Amazon EC2
+- HDFS
+
